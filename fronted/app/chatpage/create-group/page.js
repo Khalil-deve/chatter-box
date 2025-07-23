@@ -14,14 +14,19 @@ export default function CreateChatPage() {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const userId = localStorage.getItem("users");
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("user");
+    setUserId(storedUserId);
+  }, []);
   // Load users for selection
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token");
         const currentUser = JSON.parse(localStorage.getItem("user")); // parse the stored user
-        console.log('current user', currentUser);
+        console.log("current user", currentUser);
         const currentUserId = currentUser?._id;
 
         const res = await axios.get(
