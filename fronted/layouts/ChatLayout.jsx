@@ -8,22 +8,30 @@ import { useRouter } from "next/navigation";
 export default function ChatLayout() {
   const [currentUser, setCurrentUser] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
-  
+  const [isClient, setIsClient] = useState(false);
+
   const router = useRouter();
-  const isAuthenticated = localStorage.getItem("token");
-  const expiry = localStorage.getItem("tokenExpiry");
-  const isExpired = expiry && Date.now() > parseInt(expiry);
-  // Check if the user is authenticated
-  if (!isAuthenticated || isExpired) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("tokenExpiry");
-    localStorage.removeItem('user');
-    router.push("/");
-  }
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    setIsClient(true);
+
+    const token = localStorage.getItem("token");
+    const expiry = localStorage.getItem("tokenExpiry");
+    const isExpired = expiry && Date.now() > parseInt(expiry);
+
+    if (!token || isExpired) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExpiry");
+      localStorage.removeItem("user");
+      router.push("/");
+      return;
+    }
+
     const storedUser = localStorage.getItem("user");
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+
     if (parsedUser) {
       setCurrentUser({
         _id: parsedUser._id,
@@ -32,9 +40,12 @@ export default function ChatLayout() {
     }
   }, []);
 
+  // Avoid rendering until on client
+  if (!isClient) return null;
+
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar - fixed width or 25% */}
+      {/* Sidebar */}
       {currentUser && (
         <div className="md:w-[300px] bg-gray-900 text-white">
           <Sidebar
@@ -45,7 +56,7 @@ export default function ChatLayout() {
         </div>
       )}
 
-      {/* ChatWindow - fills remaining space */}
+      {/* ChatWindow */}
       <div className="flex-1 h-full bg-white dark:bg-gray-900">
         <ChatWindow currentUser={currentUser} selectedChat={selectedChat} />
       </div>
