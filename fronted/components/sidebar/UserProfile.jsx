@@ -3,12 +3,15 @@ import { FiUser, FiLogOut } from "react-icons/fi";
 
 export default function UserProfile({ currentUser }) {
   const router = useRouter();
-  function onLogout (){
+ function onLogout() {
+  if (typeof window !== 'undefined') {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiry');
     localStorage.removeItem('user');
-    router.push('/')
+    router.push('/');
   }
+}
+
   return (
     <div className="p-3 border-t border-gray-700">
       <div className="flex items-center justify-between gap-3">

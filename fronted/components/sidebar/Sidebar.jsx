@@ -18,15 +18,19 @@ export default function Sidebar({ currentUser, setSelectedChat, selectedChat }) 
 
   const router = useRouter();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) setIsOpen(true);
-    };
+ useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+    if (window.innerWidth >= 768) setIsOpen(true);
+  };
+
+  if (typeof window !== "undefined") {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }
+}, []);
+
 
   useEffect(() => {
     if (!currentUser?._id) return;

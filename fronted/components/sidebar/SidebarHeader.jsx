@@ -1,4 +1,4 @@
-import { FiMessageSquare, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 
 export default function SidebarHeader({ isMobile, setIsOpen }) {
   return (

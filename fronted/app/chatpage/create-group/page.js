@@ -67,46 +67,51 @@ export default function CreateChatPage() {
   };
 
   const handleCreateChat = async () => {
-    if (chatType === "group" && !groupName.trim()) {
-      toast.info("Please enter a group name");
-      return;
-    }
+  if (chatType === "group" && !groupName.trim()) {
+    toast.info("Please enter a group name");
+    return;
+  }
 
-    if (chatType === "group" && selectedUsers.length < 2) {
-      toast.info("Group must have at least 2 members");
-      return;
-    }
+  if (chatType === "group" && selectedUsers.length < 2) {
+    toast.info("Group must have at least 2 members");
+    return;
+  }
 
-    if (chatType === "one-to-one" && selectedUsers.length !== 1) {
-      toast.info("Please select one user to chat with");
-      return;
-    }
+  if (chatType === "one-to-one" && selectedUsers.length !== 1) {
+    toast.info("Please select one user to chat with");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      const token = localStorage.getItem("token");
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/chats`,
-        {
-          name: chatType === "group" ? groupName : undefined,
-          isGroup: chatType === "group",
-          members: selectedUsers,
+  try {
+    setLoading(true);
+
+    if (typeof window === "undefined") return;
+
+    const token = localStorage.getItem("token");
+    
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/chats`,
+      {
+        name: chatType === "group" ? groupName : undefined,
+        isGroup: chatType === "group",
+        members: selectedUsers,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      }
+    );
 
-      router.push("/chatpage");
-    } catch (err) {
-      console.error("Failed to create chat:", err);
-      toast.error(err.response?.data?.message || "Error creating chat");
-    } finally {
-      setLoading(false);
-    }
-  };
+    router.push("/chatpage");
+  } catch (err) {
+    console.error("Failed to create chat:", err);
+    toast.error(err.response?.data?.message || "Error creating chat");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-500 py-8 px-4 sm:px-6 lg:px-8">
