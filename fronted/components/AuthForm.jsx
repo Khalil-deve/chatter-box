@@ -72,6 +72,7 @@ export const AuthForm = ({ initialMode }) => {
       );
       router.push('/chatpage');
     } catch (err) {
+      console.log('the error is: ', error);
       toast.error(err.message || 'An unknown error occurred');
     } finally {
       setIsLoading(false);
