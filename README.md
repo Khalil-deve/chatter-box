@@ -1,21 +1,21 @@
-# 💬 Real-Time Chat App
+# Real-Time Chat App
 
 This is a full-stack real-time chat application built with **Next.js** (frontend), **Express.js** (backend), and **Socket.IO** for real-time messaging. It supports sending text and image messages in personal and group chats.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 🔒 Authentication (Register/Login)
-- 💬 Real-time messaging using WebSockets (Socket.IO)
-- 🧑‍🤝‍🧑 Join and create group chats
-- 🖼️ Send text and image messages
-- ✅ Error and 404 pages
-- 🧼 Clean and modular code structure (frontend & backend)
+-  Authentication (Register/Login)
+-  Real-time messaging using WebSockets (Socket.IO)
+-  Join and create group chats
+-  Send text and image messages
+-  Error and 404 pages
+-  Clean and modular code structure (frontend & backend)
 
 ---
 
-## 📁 Tech Stack
+##  Tech Stack
 
 ### Frontend (Next.js 14 with App Router)
 - React + Next.js
@@ -32,12 +32,12 @@ This is a full-stack real-time chat application built with **Next.js** (frontend
 
 ---
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/chat-app.git
+git clone https://github.com/khalil-deve/chatter-box.git
 cd chat-app
 ```
 
@@ -50,7 +50,7 @@ cd backend
 npm install
 ```
 
-🚀 Start backend:
+Start backend:
 
 ```bash
 npm start
@@ -65,7 +65,7 @@ cd ../frontend
 npm install
 ```
 
-📦 Start frontend:
+Start frontend:
 
 ```bash
 npm run dev
