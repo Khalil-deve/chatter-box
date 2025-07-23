@@ -19,7 +19,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "https://chatterbo.netlify.app",
+    origin: "https://chatter-box-sokq.vercel.app",
     credentials: true,
   })
 );
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://chatterbo.netlify.app",
+    origin: "https://chatter-box-sokq.vercel.app",
     methods: ["GET", "POST", "PUT"],
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
