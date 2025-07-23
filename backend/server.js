@@ -19,7 +19,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://chatterbo.netlify.app",
     credentials: true,
   })
 );
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://chatterbo.netlify.app",
     methods: ["GET", "POST", "PUT"],
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
@@ -42,6 +42,10 @@ initializeSocket(io);
 
 // Connect DB
 connectDB();
+
+app.get('/', (req, res)=>{
+  res.send("Hello world");
+})
 
 // API Routes
 app.use("/api/auth", authRoutes);
