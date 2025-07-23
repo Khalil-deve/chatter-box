@@ -8,41 +8,43 @@ import "react-toastify/dist/ReactToastify.css";
 import { FiCheckCircle } from "react-icons/fi";
 
 export default function CreateChatPage() {
-  const [chatType, setChatType] = useState("one-to-one"); // 'one-to-one' or 'group'
+  const [chatType, setChatType] = useState("one-to-one");
   const [groupName, setGroupName] = useState("");
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [userId, setUserId] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("user");
-    setUserId(storedUserId);
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("user");
+      setUserId(storedUserId);
+    }
   }, []);
-  // Load users for selection
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const currentUser = JSON.parse(localStorage.getItem("user")); // parse the stored user
-        console.log("current user", currentUser);
-        const currentUserId = currentUser?._id;
+        if (typeof window !== "undefined") {
+          const token = localStorage.getItem("token");
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+          const currentUserId = currentUser?._id;
 
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/users`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
-        // Exclude current user from the list
-        const filteredUsers = res.data.filter(
-          (user) => user._id !== currentUserId
-        );
-        setUsers(filteredUsers);
+          const filteredUsers = res.data.filter(
+            (user) => user._id !== currentUserId
+          );
+          setUsers(filteredUsers);
+        }
       } catch (err) {
         toast.error("Error loading users");
         console.error("Error loading users:", err);
@@ -52,7 +54,6 @@ export default function CreateChatPage() {
     fetchUsers();
   }, []);
 
-  // Toggle user selection
   const toggleUser = (userId) => {
     if (chatType === "one-to-one") {
       setSelectedUsers(selectedUsers[0] === userId ? [] : [userId]);
@@ -65,7 +66,6 @@ export default function CreateChatPage() {
     }
   };
 
-  // Create chat
   const handleCreateChat = async () => {
     if (chatType === "group" && !groupName.trim()) {
       toast.info("Please enter a group name");
@@ -124,7 +124,6 @@ export default function CreateChatPage() {
               </p>
             </div>
 
-            {/* Chat type toggle */}
             <div className="flex rounded-lg bg-gray-100 p-1">
               <button
                 className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
@@ -148,7 +147,6 @@ export default function CreateChatPage() {
               </button>
             </div>
 
-            {/* Group name input (only for group chat) */}
             {chatType === "group" && (
               <div>
                 <label
@@ -168,7 +166,6 @@ export default function CreateChatPage() {
               </div>
             )}
 
-            {/* User selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 {chatType === "group" ? "Select Members" : "Select User"}
@@ -235,7 +232,6 @@ export default function CreateChatPage() {
               </div>
             </div>
 
-            {/* Action buttons */}
             <div className="flex justify-between space-x-4 pt-2">
               <button
                 onClick={() => router.push("/chatpage")}
