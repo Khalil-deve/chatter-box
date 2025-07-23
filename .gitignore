@@ -19,9 +19,10 @@ yarn-error.log*
 # Build Outputs
 # --------------------------------------
 
-# Next.js build output (for frontend apps)
-frontend/.next/
-frontend/out/
+# Next.js build output (for fronted apps)
+fronted/.next/
+fronted/out/
+fronted/.git
 
 # --------------------------------------
 #  Logs & Misc
