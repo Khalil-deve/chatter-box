@@ -85,14 +85,14 @@ Socket logic is modularized in `backend/sockets/socket.js`.
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-### 👥 Group Chat
+### Group Chat
 ![Group Chat](/fronted/public/group-chat.png)
 ---
 
 
-## 🤝 Contributions
+## Contributions
 
 Pull requests and feedback are welcome!
 Feel free to open issues or fork this repo to improve the app.
